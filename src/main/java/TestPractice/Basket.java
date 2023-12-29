@@ -1,0 +1,71 @@
+package TestPractice;
+        import org.openqa.selenium.By;
+        import org.openqa.selenium.WebDriver;
+        import org.openqa.selenium.WebElement;
+
+        import java.time.Duration;
+        import java.util.Arrays;
+        import java.util.List;
+
+
+public class Basket {
+    private WebDriver Driver;
+    private int secondsToWait;
+    private final String TestPage = "https://practice.automationtesting.in/";
+    private final String AcceptChoice = "/html/body/div[3]/div[2]/div[1]/div[2]/div[2]/button[1]";
+    private final String ShopButton = "/html/body/div[1]/div[1]/header/div[2]/nav/ul/li[1]/a";
+    private final String Homebutton = "/html/body/div[1]/div[1]/header/div[1]/div/a/img";
+    private final String Arrival1 = "//*[@id=\"text-22-sub_row_1-0-2-0-0\"]/div/ul/li/a[1]";
+    private final String ToBasket = "//*[@id=\"product-160\"]/div[2]/form/button";
+    //public String[] arrivalXPaths = {
+    //"//*[@id=\"text-22-sub_row_1-0-2-0-0\"]/div/ul/li/a[1]",
+    // "//[@id=\"text-22-sub_row_1-0-2-1-0\"]/div/ul/li/a[1]",
+    // "//*[@id=\"text-22-sub_row_1-0-2-2-0\"]/div/ul/li/a[1]"
+
+
+    //To Create in future a Array which contains 3 arrivals and the method to call each one check the basket button go back to homepage and continue with the next one.
+    //private final String Arrival2 = "//[@id=\"text-22-sub_row_1-0-2-1-0\"]/div/ul/li/a[1]";
+    //private final String Arrival3 = "//*[@id=\"text-22-sub_row_1-0-2-2-0\"]/div/ul/li/a[1]";
+
+    //private final String RubyArrival = "https://practice.automationtesting.in/product/selenium-ruby/"; //link na stranicata s basketa na Ruby
+    //private final String ThinkingArrival = "https://practice.automationtesting.in/product/thinking-in-html/"; //link na stranicata s basketa na Thinking
+    //private final String MasteringArrival = "https://practice.automationtesting.in/product/mastering-javascript/"; //link na stranicata s basketa na Mastering
+
+    public Basket(WebDriver Driver, int secondsToWait) {
+        this.Driver = Driver;
+        this.secondsToWait = secondsToWait;
+    }
+
+
+    public void loadpage (){
+        Driver.get(TestPage);
+        Driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(secondsToWait));
+    }
+    public void AcceptCookies (){
+
+        WebElement htmlElement = Driver.findElement(By.xpath(AcceptChoice));
+        htmlElement.click();
+    }
+    public void ShopButton (){
+        WebElement htmlElement = Driver.findElement(By.xpath(ShopButton));
+        htmlElement.click();
+    }
+    public void HomeButton () {
+        WebElement htmlElement = Driver.findElement(By.xpath(Homebutton));
+        htmlElement.click();
+    }
+    public int GetArrivals(){
+        List<WebElement> arrival = Driver.findElements(By.xpath("//*[@id=\"themify_builder_content-22\"]/div[2]/div/div/div/div/div"));
+        return arrival.size();
+    }
+
+    public void ArrivalXPaths() {
+        WebElement htmlElement = Driver.findElement(By.xpath(Arrival1));
+        htmlElement.click();
+    }
+    public boolean GetToBasketButton() {
+        WebElement basket = Driver.findElement(By.xpath(ToBasket));
+        return basket.isDisplayed();
+    }
+
+}
