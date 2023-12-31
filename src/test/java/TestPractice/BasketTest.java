@@ -26,7 +26,7 @@ public class BasketTest {
     }
 
     @Test
-    @DisplayName("Expected: The Diamond image is clickable!, Proceeding to add to basket screen. Add to basket button is there!")
+    @DisplayName("Expected: All Three arrivals can be added to the Basket!")
     public void basketbutton() {
         Basket homePage = new Basket(Driver, secondsToWait);
         homePage.loadpage();
@@ -34,9 +34,8 @@ public class BasketTest {
         homePage.ShopButton();
         homePage.HomeButton();
         homePage.GetArrivals();
-        homePage.ArrivalXPaths();
-        boolean getBakset = homePage.GetToBasketButton();
-        Assertions.assertTrue(getBakset, "Basket button is NOT there");
+        boolean result = homePage.ArrivalXPaths();
+        Assertions.assertTrue(result, "Some of the arrivals are not displayed properly.");
     }
 
 }

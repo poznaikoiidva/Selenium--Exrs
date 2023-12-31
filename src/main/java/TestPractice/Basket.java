@@ -17,11 +17,11 @@ public class Basket {
     private final String Homebutton = "/html/body/div[1]/div[1]/header/div[1]/div/a/img";
     private final String Arrival1 = "//*[@id=\"text-22-sub_row_1-0-2-0-0\"]/div/ul/li/a[1]";
     private final String ToBasket = "//*[@id=\"product-160\"]/div[2]/form/button";
+    private final String ViewBasket = "//*[@id=\"content\"]/div[1]/a";
     //public String[] arrivalXPaths = {
     //"//*[@id=\"text-22-sub_row_1-0-2-0-0\"]/div/ul/li/a[1]",
     // "//[@id=\"text-22-sub_row_1-0-2-1-0\"]/div/ul/li/a[1]",
     // "//*[@id=\"text-22-sub_row_1-0-2-2-0\"]/div/ul/li/a[1]"
-
 
     //To Create in future a Array which contains 3 arrivals and the method to call each one check the basket button go back to homepage and continue with the next one.
     //private final String Arrival2 = "//[@id=\"text-22-sub_row_1-0-2-1-0\"]/div/ul/li/a[1]";
@@ -55,17 +55,33 @@ public class Basket {
         htmlElement.click();
     }
     public int GetArrivals(){
-        List<WebElement> arrival = Driver.findElements(By.xpath("//*[@id=\"themify_builder_content-22\"]/div[2]/div/div/div/div/div"));
+        List<WebElement> arrival = Driver.findElements(By.xpath("//*[@id=\"themify_builder_content-22\"]/div[2]/div/div/div/div/div[2]/div"));
         return arrival.size();
     }
 
-    public void ArrivalXPaths() {
-        WebElement htmlElement = Driver.findElement(By.xpath(Arrival1));
-        htmlElement.click();
-    }
-    public boolean GetToBasketButton() {
-        WebElement basket = Driver.findElement(By.xpath(ToBasket));
-        return basket.isDisplayed();
-    }
+    public boolean ArrivalXPaths() {
+        List<WebElement> arrival = Driver.findElements(By.xpath("//*[@id=\"themify_builder_content-22\"]/div[2]/div/div/div/div/div[2]/div"));
+        boolean result = true;
+        for (WebElement arr : arrival) {
+            arr.click();
+            WebElement basket = Driver.findElement(By.xpath(ToBasket));
+            if (basket.isDisplayed()) {
+                basket.click();
+                WebElement Viewbasket = Driver.findElement(By.xpath(ViewBasket));
+                if (!Viewbasket.isDisplayed()) {
+                   result = false;
+                   break;
+                } else {
+                    WebElement htmlElement = Driver.findElement(By.xpath(Homebutton));
+                    htmlElement.click();
+                }
+            }
+            else {
+                result = false;
+                break;
+            }
 
+        }
+        return result;
+    }
 }
