@@ -17,7 +17,7 @@ public class Basket {
     private final String ShopButton = "/html/body/div[1]/div[1]/header/div[2]/nav/ul/li[1]/a";
     private final String Homebutton = "/html/body/div[1]/div[1]/header/div[1]/div/a/img";
     private final String Arrival1 = "//*[@id=\"text-22-sub_row_1-0-2-0-0\"]/div/ul/li/a[1]";
-    private final List<String> ToBasket = new ArrayList<>();
+    //private final List<String> ToBasket = new ArrayList<>();
 
     private final String ViewBasket = "//*[@id=\"content\"]/div[1]/a";
     //public String[] arrivalXPaths = {
@@ -36,9 +36,9 @@ public class Basket {
     public Basket(WebDriver Driver, int secondsToWait) {
         this.Driver = Driver;
         this.secondsToWait = secondsToWait;
-        ToBasket.add("//*[@id=\"product-160\"]/div[2]/form/button");
-        ToBasket.add("//*[@id=\"product-163\"]/div[2]/form/button");
-        ToBasket.add("//*[@id=\"product-165\"]/div[2]/form/button");
+        //ToBasket.add("//*[@id=\"product-160\"]/div[2]/form/button");
+        //ToBasket.add("//*[@id=\"product-163\"]/div[2]/form/button");
+        //ToBasket.add("//*[@id=\"product-165\"]/div[2]/form/button");
     }
 
 
@@ -67,7 +67,9 @@ public class Basket {
     public boolean ArrivalXPaths(int num) {
         List<WebElement> arrival = Driver.findElements(By.xpath("//*[@id=\"themify_builder_content-22\"]/div[2]/div/div/div/div/div[2]/div"));
         arrival.get(num).click();
-        WebElement basket = Driver.findElement(By.xpath(ToBasket.get(num)));
+        WebElement id = Driver.findElement(By.cssSelector("[id^=product-]"));
+        String xpath = "//*[@id=\"" + id.getAttribute("id") + "\"]/div[2]/form/button";
+        WebElement basket = Driver.findElement(By.xpath(xpath));
         if (basket.isDisplayed()) {
             basket.click();
             WebElement Viewbasket = Driver.findElement(By.xpath(ViewBasket));
