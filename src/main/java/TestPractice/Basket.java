@@ -4,6 +4,7 @@ package TestPractice;
         import org.openqa.selenium.WebElement;
 
         import java.time.Duration;
+        import java.util.ArrayList;
         import java.util.Arrays;
         import java.util.List;
 
@@ -16,7 +17,8 @@ public class Basket {
     private final String ShopButton = "/html/body/div[1]/div[1]/header/div[2]/nav/ul/li[1]/a";
     private final String Homebutton = "/html/body/div[1]/div[1]/header/div[1]/div/a/img";
     private final String Arrival1 = "//*[@id=\"text-22-sub_row_1-0-2-0-0\"]/div/ul/li/a[1]";
-    private final String ToBasket = "//*[@id=\"product-160\"]/div[2]/form/button";
+    private final List<String> ToBasket = new ArrayList<>();
+
     private final String ViewBasket = "//*[@id=\"content\"]/div[1]/a";
     //public String[] arrivalXPaths = {
     //"//*[@id=\"text-22-sub_row_1-0-2-0-0\"]/div/ul/li/a[1]",
@@ -34,6 +36,9 @@ public class Basket {
     public Basket(WebDriver Driver, int secondsToWait) {
         this.Driver = Driver;
         this.secondsToWait = secondsToWait;
+        ToBasket.add("//*[@id=\"product-160\"]/div[2]/form/button");
+        ToBasket.add("//*[@id=\"product-163\"]/div[2]/form/button");
+        ToBasket.add("//*[@id=\"product-165\"]/div[2]/form/button");
     }
 
 
@@ -59,29 +64,26 @@ public class Basket {
         return arrival.size();
     }
 
-    public boolean ArrivalXPaths() {
+    public boolean ArrivalXPaths(int num) {
         List<WebElement> arrival = Driver.findElements(By.xpath("//*[@id=\"themify_builder_content-22\"]/div[2]/div/div/div/div/div[2]/div"));
-        boolean result = true;
-        for (WebElement arr : arrival) {
-            arr.click();
-            WebElement basket = Driver.findElement(By.xpath(ToBasket));
-            if (basket.isDisplayed()) {
-                basket.click();
-                WebElement Viewbasket = Driver.findElement(By.xpath(ViewBasket));
-                if (!Viewbasket.isDisplayed()) {
-                   result = false;
-                   break;
-                } else {
-                    WebElement htmlElement = Driver.findElement(By.xpath(Homebutton));
-                    htmlElement.click();
-                }
-            }
-            else {
-                result = false;
-                break;
-            }
+        arrival.get(num).click();
+        WebElement basket = Driver.findElement(By.xpath(ToBasket.get(num)));
+        if (basket.isDisplayed()) {
+            basket.click();
+            WebElement Viewbasket = Driver.findElement(By.xpath(ViewBasket));
+            if (!Viewbasket.isDisplayed()) {
+               return false;
 
+            } else {
+                WebElement htmlElement = Driver.findElement(By.xpath(Homebutton));
+                htmlElement.click();
+            }
         }
-        return result;
+        else {
+            return false;
+        }
+        return true;
     }
 }
+//*[@id="product-163"]/div[2]/form/button
+//*[@id="product-165"]/div[2]/form/button

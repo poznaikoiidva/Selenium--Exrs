@@ -33,9 +33,12 @@ public class BasketTest {
         homePage.AcceptCookies();
         homePage.ShopButton();
         homePage.HomeButton();
-        homePage.GetArrivals();
-        boolean result = homePage.ArrivalXPaths();
-        Assertions.assertTrue(result, "Some of the arrivals are not displayed properly.");
+        int num = homePage.GetArrivals();
+        for (int i = 0; i < num; i ++) {
+            boolean result = homePage.ArrivalXPaths(i);
+            Assertions.assertTrue(result, "Arrival " + (i+1)+" Does not displayed properly.");
+        }
+
     }
 
 }
